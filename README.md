@@ -1,2 +1,5 @@
-# fastvideo-gpu-validation-20261108-978d4afe58
-One-time CUDA validation of FastVideo attention adapter semantics
+# FastVideo masked attention adapter validation
+
+The [GitHub Actions run](https://github.com/bingdongni/fastvideo-gpu-validation-20261108-978d4afe58/actions/runs/42472158031) validates FastVideo commit `4731dfaed0ccee6c7a99893ccede648e16074300` against upstream baseline `ce970eb715215c79a169658d7aa6c8a96e64891e`. In the FA2 adapter simulation, the baseline produced twelve failing and six passing cases; the patched code passed all 18. The FA3 simulation passed nine equal-length cases and skipped nine unequal-length cases. The [job log](gpu-validation.log) records the checks and GPU details. The repository hooks also passed on the changed files in the same run.
+
+The one-job runner used Windows, an NVIDIA GeForce RTX 4060 Laptop GPU, PyTorch 2.6.0+cu124 and CUDA 12.4. The Python adapter is the FastVideo implementation, but this check substitutes PyTorch CUDA scaled-dot-product attention for the FlashAttention no-padding functions. It therefore tests GPU tensor and adapter semantics, not a native FlashAttention kernel or end-to-end video generation.
